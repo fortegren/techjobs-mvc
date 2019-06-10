@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head">
 </head>
-<body>
 
 <div th:replace="fragments :: page-header"></div>
 
@@ -37,8 +36,20 @@
     <hr />
 
     <!-- TODO #2 - Loop over jobs map to display all job fields -->
+    <div>
+        <h3 th:if="${#arrays.isEmpty(jobs)}">0 Results</h3>
 
+        <th:block th:each="jobs, job: ${jobs}">
+            <span th:if="${job.index == 0}">
+                <h3 th:text="${job.size} + ' Result(s)'"></h3>
+            </span>
+            <table class="job-listing">
+                <tr th:each="item : ${job.current}">
+                    <td th:text="${#strings.capitalizeWords(item.key)}"></td> <!-- -->
+                    <td th:text="${item.value}"></td>
+                </tr>
+            </table>
+        </th:block>
+    </div>
 </div>
-
-</body>
 </html>
